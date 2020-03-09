@@ -1,62 +1,51 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-const axios = require('axios');
-class App extends React.Component {
-constructor(props) {
-  super(props);
-  this.state = {
-    error: null,
-    isLoaded: false,
-    items: []
-  };
-}
+import React from "react";
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-componentDidMount() {
-  //fetch("http://ahmaddar009.0fees.us/api/9")
-  axios.get("http://ahmaddar009.0fees.us/api/9",
-        { headers: {'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*','Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-      }}
-      )
-    .then(res => res.json())
-    .then(
-      (result) => {
-        this.setState({
-          isLoaded: true,
-          items: result.items
-        });
-      },
-      // Note: it's important to handle errors here
-      // instead of a catch() block so that we don't swallow
-      // exceptions from actual bugs in components.
-      (error) => {
-        this.setState({
-          isLoaded: true,
-          error
-        });
-      }
-    )
-}
+import Login from "./views/Login";
+import SignUp from "./views/SignUp";
+import Forgot from "./views/Forgot";
 
-render() {
-  const { error, isLoaded, items } = this.state;
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  } else if (!isLoaded) {
-    return <div>Loading...</div>;
-  } else {
-    return (
-      <ul>
-        {items.map(item => (
-          <li key={item.amount}>
-            {item.name} {item.response_desc}
-          </li>
-        ))}
-      </ul>
-    );
-  }
-}
+function App() {
+  return (
+    <Router>
+      <div className="App">
+        <nav className="navbar navbar-expand-lg navbar-light fixed-top">
+          <div className="container">
+            <Link className="navbar-brand" to={"/sign-in"}>
+              Ticket Management System
+            </Link>
+            <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+              <ul className="navbar-nav ml-auto">
+                <li className="nav-item">
+                  <Link className="nav-link" to={"/sign-in"}>
+                    Login
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to={"/sign-up"}>
+                    Sign up
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+        <div className="auth-wrapper">
+          <div className="auth-inner">
+            <Switch>
+              <Route exact path="/" component={Login} />
+              <Route path="/sign-in" component={Login} />
+              <Route path="/sign-up" component={SignUp} />
+              <Route path="/forgot" component={Forgot} />
+            </Switch>
+          </div>
+        </div>
+      </div>
+    </Router>
+  );
 }
 
 export default App;
