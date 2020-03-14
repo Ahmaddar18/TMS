@@ -20,8 +20,8 @@ class App extends Component {
   render() {
     return (
       <Layout>
-        <Header style={{ textAlign: 'center', backgroundColor:'white'}}><h1>Ticket Management System</h1></Header>
-        <Content>
+        <Header style={{ textAlign: 'center', backgroundColor:'yellow'}}><h1>Ticket Management System</h1></Header>
+        <Content style={{ textAlign: 'center'}}>
           {this.state.loginPage}
           {this.state.homeScreen}
         </Content>

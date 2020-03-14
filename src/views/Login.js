@@ -39,12 +39,12 @@ class Login extends Component {
       .then(function(response) {
         // handle success
         if (response.data) {
-          console.log(response.data);
-          console.log("Travel id is " + response.data.travel_id);
+          console.log(response.data)
+          console.log(response.data.first_name)
+          localStorage.setItem('user', JSON.stringify(response.data));
           message.success("Successfully logged in");
-          my.setState({isLoggedIn:true})
           let screen=[];
-          screen.push(<HomeScreen parentContext={my.props.appContext}/>)
+          screen.push(<HomeScreen parentContext={my.props.appContext} key={'home'}/>)
           my.props.appContext.setState({loginPage:[],homeScreen:screen})
         } else message.error("User didn't found please enter correct credentials");
       })

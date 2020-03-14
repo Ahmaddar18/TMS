@@ -32,7 +32,7 @@ class Loginscreen extends Component {
     let loginmessage;
     if (this.state.isLogin) {
       let loginscreen = [];
-      loginscreen.push(<Register parentContext={this} key={"register-screen"}/>);
+      loginscreen.push(<Register parentContext={this} appContext={this.props.appContext } key={"register-screen"}/>);
       loginmessage = "Registration";
       this.setState({
         loginscreen: loginscreen,
@@ -66,7 +66,4 @@ class Loginscreen extends Component {
     );
   }
 }
-const style = {
-  margin: 15
-};
 export default Loginscreen;
