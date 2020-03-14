@@ -1,51 +1,34 @@
-import React from "react";
-import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-
-import Login from "./views/Login";
-import SignUp from "./views/SignUp";
-import Forgot from "./views/Forgot";
-
-function App() {
-  return (
-    <Router>
+import React, { Component } from 'react';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import Loginscreen from './views/Loginscreen'
+// Needed for onTouchTap
+// http://stackoverflow.com/a/34015469/988941
+injectTapEventPlugin();
+class App extends Component {
+  constructor(props){
+    super(props);
+    this.state={
+      loginPage:[],
+      uploadScreen:[]
+    }
+  }
+  componentWillMount(){
+    var loginPage =[];
+    loginPage.push(<Loginscreen parentContext={this}/>);
+    this.setState({
+                  loginPage:loginPage
+                    })
+  }
+  render() {
+    return (
       <div className="App">
-        <nav className="navbar navbar-expand-lg navbar-light fixed-top">
-          <div className="container">
-            <Link className="navbar-brand" to={"/sign-in"}>
-              Ticket Management System
-            </Link>
-            <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-              <ul className="navbar-nav ml-auto">
-                <li className="nav-item">
-                  <Link className="nav-link" to={"/sign-in"}>
-                    Login
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link" to={"/sign-up"}>
-                    Sign up
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-
-        <div className="auth-wrapper">
-          <div className="auth-inner">
-            <Switch>
-              <Route exact path="/" component={Login} />
-              <Route path="/sign-in" component={Login} />
-              <Route path="/sign-up" component={SignUp} />
-              <Route path="/forgot" component={Forgot} />
-            </Switch>
-          </div>
-        </div>
+        {this.state.loginPage}
+        {this.state.uploadScreen}
       </div>
-    </Router>
-  );
+    );
+  }
 }
-
+const style = {
+  margin: 15,
+};
 export default App;
