@@ -1,76 +1,102 @@
 import React, { Component } from "react";
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import AppBar from 'material-ui/AppBar';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
 import HomeScreen from './HomeScreen';
-const axios = require('axios').default;
+import { Form, Input, Button, Checkbox } from "antd";
+import { message } from "antd";
+
+const layout = {
+  labelCol: {
+    span: 8
+  },
+  wrapperCol: {
+    span: 16
+  }
+};
+const tailLayout = {
+  wrapperCol: {
+    offset: 8,
+    span: 16
+  }
+};
+
 class Login extends Component {
-constructor(props){
-  super(props);
-  this.state={
-  username:'',
-  password:''
+  constructor(props) {
+    super(props);
+    var localloginComponent = [];
+    this.state = {
+      username: "",
+      password: "",
+      menuValue: 1,
+      loginComponent: localloginComponent,
+      loginRole: "student"
+    };
   }
- }
- handleClick(event){
-    var apiBaseUrl = "http://localhost:4000/api/";
-    var self = this;
-    var payload={
-    "email":this.state.username,
-    "password":this.state.password
-    }
-    axios.post(apiBaseUrl+'login', payload)
-    .then(function (response) {
-    console.log(response);
-    if(response.data.code === 200){
-    console.log("Login successfull");
-    let screen=[];
-    screen.push(<HomeScreen appContext={self.props.appContext}/>)
-    self.props.appContext.setState({loginPage:[],HomeScreen:HomeScreen})
-    }
-    else if(response.data.code === 204){
-    console.log("Username password do not match");
-    alert("username password do not match")
-    }
-    else{
-    console.log("Username does not exists");
-    alert("Username does not exist");
-    }
-    })
-    .catch(function (error) {
-    console.log(error);
-    });
-    }
-render() {
-    return (
-      <div>
-        <MuiThemeProvider>
-          <div>
-          <AppBar
-             title="Login"
-           />
-           <TextField
-             hintText="Enter your Username"
-             floatingLabelText="Username"
-             onChange = {(event,newValue) => this.setState({username:newValue})}
-             />
-           <br/>
-             <TextField
-               type="password"
-               hintText="Enter your Password"
-               floatingLabelText="Password"
-               onChange = {(event,newValue) => this.setState({password:newValue})}
-               />
-             <br/>
-             <RaisedButton label="Submit" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
-         </div>
-         </MuiThemeProvider>
-      </div>
-    );
-  }
-}
-const style = {
- margin: 15,
+  render(){
+  const onFinish = values => {
+    console.log("Success:", values);
+    message.success("Successfully logged in");
+//    if(response.data.code === 200){
+
+  let screen=[];
+  screen.push(<HomeScreen parentContext={this.props.parentContext}/>)
+  this.props.parentContext.setState({loginPage:[],homeScreen:screen})
+ // }
+  };
+
+  const onFinishFailed = errorInfo => {
+    console.log("Failed:", errorInfo);
+   // message.error("This is an error message");
+  };
+
+  return (
+    <Form
+      {...layout}
+      name="basic"
+      initialValues={{
+        remember: true
+      }}
+      onFinish={onFinish}
+      onFinishFailed={onFinishFailed}
+    >
+      <Form.Item
+        label="Username"
+        name="username"
+        rules={[
+          {
+            required: true,
+            message: "Please input your username!"
+          }
+        ]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        label="Password"
+        name="password"
+        rules={[
+          {
+            required: true,
+            message: "Please input your password!"
+          }
+        ]}
+      >
+        <Input.Password />
+      </Form.Item>
+
+      <Form.Item {...tailLayout} name="remember" valuePropName="checked">
+        <Checkbox>Remember me</Checkbox>
+      </Form.Item>
+
+      <Form.Item {...tailLayout}>
+        <Button type="primary" htmlType="submit">
+          Submit
+        </Button>
+      </Form.Item>
+    </Form>
+  );
+      }
 };
 export default Login;
+
+
+
