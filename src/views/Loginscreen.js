@@ -16,12 +16,12 @@ class Loginscreen extends Component {
       isLogin: true
     };
   }
-  componentWillMount() {
-    var loginscreen = [];
+  UNSAFE_componentWillMount() {
+    let loginscreen = [];
     loginscreen.push(
-      <Login parentContext={this} appContext={this.props.parentContext} />
+      <Login parentContext={this} appContext={this.props.appContext } key={"login"}/>
     );
-    var loginmessage = "Login";
+    let loginmessage = "Login";
     this.setState({
       loginscreen: loginscreen,
       loginmessage: loginmessage
@@ -29,10 +29,10 @@ class Loginscreen extends Component {
   }
   handleClick(event) {
     // console.log("event",event);
-    var loginmessage;
+    let loginmessage;
     if (this.state.isLogin) {
-      var loginscreen = [];
-      loginscreen.push(<Register parentContext={this} />);
+      let loginscreen = [];
+      loginscreen.push(<Register parentContext={this} key={"register-screen"}/>);
       loginmessage = "Registration";
       this.setState({
         loginscreen: loginscreen,
@@ -41,8 +41,8 @@ class Loginscreen extends Component {
         isLogin: false
       });
     } else {
-      var loginscreen = [];
-      loginscreen.push(<Login parentContext={this} />);
+      let loginscreen = [];
+      loginscreen.push(<Login parentContext={this} appContext={this.props.appContext} key={"login-screen"}/>);
       loginmessage = "Login";
       this.setState({
         loginscreen: loginscreen,

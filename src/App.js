@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Loginscreen from "./views/Loginscreen";
 import { Layout } from "antd";
-const { Header, Footer, Sider, Content } = Layout;
+const { Header, Footer, Content } = Layout;
 class App extends Component {
   constructor(props) {
     super(props);
@@ -10,9 +10,9 @@ class App extends Component {
       homeScreen: []
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     var loginPage = [];
-    loginPage.push(<Loginscreen appContext={this} />);
+    loginPage.push(<Loginscreen appContext={this} key={"login-screen"}/>);
     this.setState({
       loginPage: loginPage
     });

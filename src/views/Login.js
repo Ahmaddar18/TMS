@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import HomeScreen from './HomeScreen';
 import { Form, Input, Button, Checkbox } from "antd";
+import axios from "axios";
 import { message } from "antd";
-
+let apiBaseUrl =
+  "http://localhost/t/select.php?table=user&column=id&value=1&login=login";
 const layout = {
   labelCol: {
     span: 8
@@ -21,30 +23,46 @@ const tailLayout = {
 class Login extends Component {
   constructor(props) {
     super(props);
-    var localloginComponent = [];
+    let localloginComponent = [];
     this.state = {
       username: "",
       password: "",
       menuValue: 1,
-      loginComponent: localloginComponent,
-      loginRole: "student"
+      loginComponent: localloginComponent
     };
   }
   render(){
-  const onFinish = values => {
-    console.log("Success:", values);
-    message.success("Successfully logged in");
-//    if(response.data.code === 200){
-
-  let screen=[];
-  screen.push(<HomeScreen parentContext={this.props.parentContext}/>)
-  this.props.parentContext.setState({loginPage:[],homeScreen:screen})
- // }
+  const onFinish = data => {
+    let my = this;
+    axios
+      .get(apiBaseUrl + "&username=" + data.username + "&password=" + data.password)
+      .then(function(response) {
+        // handle success
+        if (response.data) {
+          console.log(response.data);
+          console.log("Travel id is " + response.data.travel_id);
+          message.success("Successfully logged in");
+          my.setState({isLoggedIn:true})
+          let screen=[];
+          screen.push(<HomeScreen parentContext={my.props.appContext}/>)
+          my.props.appContext.setState({loginPage:[],homeScreen:screen})
+        } else message.error("User didn't found please enter correct credentials");
+      })
+      .catch(function(error) {
+        // handle error
+        console.log(error);
+      })
+      .then(function() {
+        console.log("finally");
+        // always executed
+      });
   };
 
   const onFinishFailed = errorInfo => {
     console.log("Failed:", errorInfo);
-   // message.error("This is an error message");
+    console.log('user'+errorInfo.values.username)
+    if(errorInfo.values.username !== '' && errorInfo.values.username !== undefined)
+       message.error("Please fill both fields");
   };
 
   return (
