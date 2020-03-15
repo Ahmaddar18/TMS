@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Loginscreen from "./views/Loginscreen";
 import { Layout } from "antd";
+import "./App.css"
 const { Header, Footer, Content } = Layout;
 class App extends Component {
   constructor(props) {
@@ -19,18 +20,18 @@ class App extends Component {
   }
   render() {
     return (
-      <Layout>
+      <Layout >
         <Header style={{ textAlign: "center", backgroundColor: "yellow" }}>
           <h1>Ticket Management System</h1>
         </Header>
-        <Content style={{ textAlign: "center", height: '100%' }}>
+        <Content id="page-container" style={{ textAlign: "center", height: '100%' , backgroundColor:'gray'}}>
           {this.state.loginPage}
           {this.state.homeScreen}
           <br />
           <br />
           <br />
         </Content>
-        <Footer style={{ textAlign: "center", minHeight:'70px'}}>
+        <Footer id="footer" >
           TMS ©2020 Created by Ahmad Ijaz
         </Footer>
       </Layout>
