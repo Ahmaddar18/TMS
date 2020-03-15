@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ShowTicket from "./components/ShowTicket";
-import { Card, Mentions } from "antd";
+import { Card, Mentions,Button } from "antd";
 export default class HomeScreen extends Component {
   render() {
     let user = JSON.parse(localStorage.getItem("user"));
@@ -9,7 +9,7 @@ export default class HomeScreen extends Component {
       <div>
         <Card
           title={<h1>Welcome {user.first_name}</h1>}
-          extra={<a href="sign-in">Logout?</a>}
+          extra={<Button onClick={() => window.location.reload(false)}>Logout?</Button>}
           style={{ width: 530, left: "35%", top: "40px" }}
         >
           <div style={{ marginBottom: 10 }}>
