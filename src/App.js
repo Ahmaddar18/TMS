@@ -12,7 +12,7 @@ class App extends Component {
   }
   UNSAFE_componentWillMount() {
     var loginPage = [];
-    loginPage.push(<Loginscreen appContext={this} key={"login-screen"}/>);
+    loginPage.push(<Loginscreen appContext={this} key={"login-screen"} />);
     this.setState({
       loginPage: loginPage
     });
@@ -20,15 +20,19 @@ class App extends Component {
   render() {
     return (
       <Layout>
-        <Header style={{ textAlign: 'center', backgroundColor:'yellow'}}><h1>Ticket Management System</h1></Header>
-        <Content style={{ textAlign: 'center'}}>
+        <Header style={{ textAlign: "center", backgroundColor: "yellow" }}>
+          <h1>Ticket Management System</h1>
+        </Header>
+        <Content style={{ textAlign: "center", height: '100%' }}>
           {this.state.loginPage}
           {this.state.homeScreen}
+          <br />
+          <br />
+          <br />
         </Content>
-        <br />
-        <br />
-        <br />
-        <Footer style={{ textAlign: 'center'}}>TMS ©2020 Created by Ahmad Ijaz</Footer>
+        <Footer style={{ textAlign: "center", minHeight:'70px'}}>
+          TMS ©2020 Created by Ahmad Ijaz
+        </Footer>
       </Layout>
     );
   }
